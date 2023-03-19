@@ -1,0 +1,115 @@
+﻿<Window x:Class="SerialPortMemoTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SerialPortMemoTool"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <DockPanel >
+        <Menu Height="20" DockPanel.Dock="Top">
+            <MenuItem Header="File(F)">
+                <MenuItem Header="Config" HorizontalAlignment="Left"/>
+                <Separator />
+                <MenuItem Header="Exit" HorizontalAlignment="Left" />
+
+            </MenuItem>
+        </Menu>
+        <TabControl Margin="0" DockPanel.Dock="Top" >
+            <TabItem Header="Main">
+                <Grid>
+                    <DataGrid x:Name="dgridMain" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding}"  AutoGenerateColumns="False" >
+                        <DataGrid.ItemContainerStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsTimeOut}" Value="True">
+                                        <Setter Property="Background" Value="Red" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.ItemContainerStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding PortName}" Header="PortName" />
+                            <DataGridTextColumn Binding="{Binding VID}" Header="VID" />
+                            <DataGridTextColumn Binding="{Binding PID}" Header="PID" />
+                            <DataGridTextColumn Binding="{Binding MI}" Header="MI" />
+                            <DataGridTextColumn Binding="{Binding LastConnectTime}" Header="LastConnectTime" />
+                            <!--<DataGridTextColumn Binding="{Binding AlertTimeDay}" Header="AlertTimeDay" />-->
+                            <DataGridTextColumn Header="AlertTimeDay">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="AlertTimeDay"  Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <local:NullCheckValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Debug">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.15*" />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Column="0" Grid.Row="0"  Orientation="Vertical">
+                        <Button x:Name="btnTest" Margin="5,5,5,5" Content="Test" Click="btnTest_Click"/>
+                        <Button x:Name="btnTestSerialName" Margin="5,5,5,5" Content="TestSerialName" Click="btnTestSerialName_Click" />
+                    </StackPanel>
+                    <TextBox x:Name="txtDebug" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Text="" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
+
+                    <StackPanel Grid.Column="0" Grid.Row="2"  Orientation="Vertical">
+                        <Button x:Name="btnReadXml" Margin="5" Content="XmlRead" Click="btnReadXml_Click" />
+                        <Button x:Name="btnWriteXml" Margin="5" Content="XmlWrite" Click="btnWriteXml_Click"  />
+                    </StackPanel>
+
+
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="SerialComm">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.15*" />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+
+                    <Button x:Name="btnConnect" Grid.Column="0" Grid.Row="0" Margin="5" Content="Connect"/>
+                    <TextBlock Text="PortName" Grid.Column="1" Grid.Row="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="comPortName" Grid.Column="2" Grid.Row="0" Margin="5" Text="" />
+
+
+                    <Button x:Name="btnDisconnect" Grid.Column="0" Grid.Row="1" Margin="5" Content="Disconnect"/>
+                    <TextBlock Text="BaudRate" Grid.Column="1" Grid.Row="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="txtBaudRate" Grid.Column="2" Grid.Row="1" Margin="5" Text="115200" />
+
+
+                    <TextBox x:Name="txtReceive" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Text="" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
+
+                    <Button x:Name="btnSend" Content="Send" Grid.Column="0" Grid.Row="3" Margin="5"/>
+                    <TextBox x:Name="txtSend" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Text="" />
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
