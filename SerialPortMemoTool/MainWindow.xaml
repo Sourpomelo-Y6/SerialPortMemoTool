@@ -18,7 +18,7 @@
         <TabControl Margin="0" DockPanel.Dock="Top" >
             <TabItem Header="Main">
                 <Grid>
-                    <DataGrid x:Name="dgridMain" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding}"  AutoGenerateColumns="False" >
+                    <DataGrid x:Name="dgridMain" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding}"  AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.ItemContainerStyle>
                             <Style TargetType="DataGridRow">
                                 <Style.Triggers>
