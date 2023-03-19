@@ -40,9 +40,16 @@ namespace SerialPortMemoTool
 
             sdx.ReadXml(datas);
             dgridMain.ItemsSource = datas;
+
+            SearchSerialPortNameStart();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            SearchSerialPortNameStart();
+        }
+
+        private void SearchSerialPortNameStart()
         {
             List<SerialportData> reg_datas = new List<SerialportData>();
             String pattern = String.Format("^VID_.*PID_.*");
@@ -88,21 +95,21 @@ namespace SerialPortMemoTool
             {
 
                 SerialportData serialportData = regdata;//new SerialportData();
-
+                
+                //serialportData.PortName = data.PortName;
+                //serialportData.PID = data.PID;
+                //serialportData.VID = data.VID;
+                //serialportData.MI = data.MI;
 
                 foreach (var data in datas)
                 {
                     if (regdata.PortName == data.PortName)
                     {
-
+                        serialportData.LastConnectTime = data.LastConnectTime;
+                        serialportData.AlertTimeDay = data.AlertTimeDay;
                     }
                 }
 
-                //serialportData.PortName = data.PortName;
-                //serialportData.PID = data.PID;
-                //serialportData.VID = data.VID;
-                //serialportData.MI = data.MI;
-                //serialportData.LastConnectTime = data.LastConnectTime;
 
                 new_datas.Add(serialportData);
             }
@@ -110,7 +117,6 @@ namespace SerialPortMemoTool
             datas.Clear();
             datas = new_datas;
             dgridMain.ItemsSource = datas;
-
         }
 
         private void btnTestSerialName_Click(object sender, RoutedEventArgs e)
@@ -209,8 +215,23 @@ namespace SerialPortMemoTool
             return child;
         }
 
+        private void MenuItemStart_Click(object sender, RoutedEventArgs e)
+        {
+            SearchSerialPortNameStart();
+        }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MenuItemSaveAlertTimeDay_Click(object sender, RoutedEventArgs e)
+        {
+            sdx.WriteXml(datas);
+        }
     }
 
+    //https://support.microsoft.com/ja-jp/topic/wpf-%E3%81%AE-datagrid-%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6-%E5%85%A5%E5%8A%9B%E3%81%95%E3%82%8C%E3%81%9F%E5%80%A4%E3%81%AE%E6%A4%9C%E8%A8%BC%E3%82%92%E8%A1%8C%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88-%E6%A4%9C%E8%A8%BC%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%92%E7%A4%BA%E3%81%99%E8%B5%A4%E6%9E%A0%E3%81%8C%E3%81%9A%E3%82%8C%E3%81%A6%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B-f337de29-113d-bbdc-b607-49c01656e1b0
     public class NullCheckValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)

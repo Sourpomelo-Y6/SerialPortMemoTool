@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SerialPortMemoTool"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="SerialPortMemo" Height="450" Width="800" Loaded="Window_Loaded">
     <DockPanel >
         <Menu Height="20" DockPanel.Dock="Top">
-            <MenuItem Header="File(F)">
-                <MenuItem Header="Config" HorizontalAlignment="Left"/>
+            <MenuItem Header="_File(F)" InputGestureText="Ctrl+F" >
+                <MenuItem Header="_Start(S)" InputGestureText="Ctrl+S" HorizontalAlignment="Left" Click="MenuItemStart_Click"/>
+                <MenuItem Header="_SaveAlertTimeDay(A)" InputGestureText="Ctrl+A" HorizontalAlignment="Left" Click="MenuItemSaveAlertTimeDay_Click" />
+
                 <Separator />
-                <MenuItem Header="Exit" HorizontalAlignment="Left" />
+                <MenuItem Header="_Exit(X)" InputGestureText="Ctrl+X" HorizontalAlignment="Left" Click="MenuItemExit_Click"/>
 
             </MenuItem>
         </Menu>
@@ -73,11 +75,9 @@
                         <Button x:Name="btnWriteXml" Margin="5" Content="XmlWrite" Click="btnWriteXml_Click"  />
                     </StackPanel>
 
-
-
                 </Grid>
             </TabItem>
-            <TabItem Header="SerialComm">
+            <TabItem Header="SerialComm" Visibility="Hidden">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*" />
